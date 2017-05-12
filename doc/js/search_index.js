@@ -1,0 +1,1 @@
+var search_data = {"index":{"searchIndex":["myclasee","taco()"],"longSearchIndex":["myclasee","myclasee#taco()"],"info":[["MyClasee","","MyClasee.html","","<p>RDoc Example\n<p>This is a heading\n<p>First item in an outer list\n"],["taco","MyClasee","MyClasee.html#method-i-taco","()",""]]}}

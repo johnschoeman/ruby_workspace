@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+
+<title>class Dungeon - RDoc Documentation</title>
+
+<link type="text/css" media="screen" href="./rdoc.css" rel="stylesheet">
+
+<script type="text/javascript">
+  var rdoc_rel_prefix = "./";
+</script>
+
+<script type="text/javascript" charset="utf-8" src="./js/jquery.js"></script>
+<script type="text/javascript" charset="utf-8" src="./js/navigation.js"></script>
+<script type="text/javascript" charset="utf-8" src="./js/search_index.js"></script>
+<script type="text/javascript" charset="utf-8" src="./js/search.js"></script>
+<script type="text/javascript" charset="utf-8" src="./js/searcher.js"></script>
+<script type="text/javascript" charset="utf-8" src="./js/darkfish.js"></script>
+
+
+<body id="top" class="class">
+<nav id="metadata">
+  <nav id="home-section" class="section">
+  <h3 class="section-header">
+    <a href="./index.html">Home</a>
+    <a href="./table_of_contents.html#classes">Classes</a>
+    <a href="./table_of_contents.html#methods">Methods</a>
+  </h3>
+</nav>
+
+
+  <nav id="search-section" class="section project-section" class="initially-hidden">
+  <form action="#" method="get" accept-charset="utf-8">
+    <h3 class="section-header">
+      <input type="text" name="search" placeholder="Search" id="search-field"
+             title="Type to search, Up and Down to navigate, Enter to load">
+    </h3>
+  </form>
+
+  <ul id="search-results" class="initially-hidden"></ul>
+</nav>
+
+
+  
+
+  <div id="file-metadata">
+    <nav id="file-list-section" class="section">
+  <h3 class="section-header">Defined In</h3>
+  <ul>
+    <li>dungeontext.rb
+  </ul>
+</nav>
+
+    
+  </div>
+
+  <div id="class-metadata">
+    
+    <nav id="parent-class-section" class="section">
+  <h3 class="section-header">Parent</h3>
+  
+  <p class="link"><a href="Object.html">Object</a>
+  
+</nav>
+
+    
+    
+    <!-- Method Quickref -->
+<nav id="method-list-section" class="section">
+  <h3 class="section-header">Methods</h3>
+
+  <ul class="link-list">
+    
+    <li ><a href="#method-c-new">::new</a>
+    
+    <li ><a href="#method-i-add_room">#add_room</a>
+    
+    <li ><a href="#method-i-find_room_in_direction">#find_room_in_direction</a>
+    
+    <li ><a href="#method-i-find_room_in_dungeon">#find_room_in_dungeon</a>
+    
+    <li ><a href="#method-i-go">#go</a>
+    
+    <li ><a href="#method-i-request_action">#request_action</a>
+    
+    <li ><a href="#method-i-show_current_description">#show_current_description</a>
+    
+    <li ><a href="#method-i-show_current_direction_options">#show_current_direction_options</a>
+    
+    <li ><a href="#method-i-start">#start</a>
+    
+  </ul>
+</nav>
+
+  </div>
+
+  <div id="project-metadata">
+    <nav id="fileindex-section" class="section project-section">
+  <h3 class="section-header">Pages</h3>
+
+  <ul>
+  
+    <li class="file"><a href="./doc/Array_html.html">Array.html</a>
+  
+    <li class="file"><a href="./doc/Dungeon_html.html">Dungeon.html</a>
+  
+    <li class="file"><a href="./doc/Dungeon/Item_html.html">Item.html</a>
+  
+    <li class="file"><a href="./doc/Dungeon/Player_html.html">Player.html</a>
+  
+    <li class="file"><a href="./doc/Dungeon/Room_html.html">Room.html</a>
+  
+    <li class="file"><a href="./doc/Fixnum_html.html">Fixnum.html</a>
+  
+    <li class="file"><a href="./doc/Fixnum/Array_html.html">Array.html</a>
+  
+    <li class="file"><a href="./doc/Mirror_html.html">Mirror.html</a>
+  
+    <li class="file"><a href="./doc/Mirrornum_html.html">Mirrornum.html</a>
+  
+    <li class="file"><a href="./doc/Object_html.html">Object.html</a>
+  
+    <li class="file"><a href="./doc/Person_html.html">Person.html</a>
+  
+    <li class="file"><a href="./doc/String_html.html">String.html</a>
+  
+    <li class="file"><a href="./doc/created_rid.html">created.rid</a>
+  
+    <li class="file"><a href="./doc/doc/created_rid_html.html">created_rid.html</a>
+  
+    <li class="file"><a href="./doc/index_html.html">index.html</a>
+  
+    <li class="file"><a href="./doc/irandeal_txt_html.html">irandeal_txt.html</a>
+  
+    <li class="file"><a href="./doc/js/darkfish_js.html">darkfish.js</a>
+  
+    <li class="file"><a href="./doc/js/jquery_js.html">jquery.js</a>
+  
+    <li class="file"><a href="./doc/js/navigation_js.html">navigation.js</a>
+  
+    <li class="file"><a href="./doc/js/search_js.html">search.js</a>
+  
+    <li class="file"><a href="./doc/js/search_index_js.html">search_index.js</a>
+  
+    <li class="file"><a href="./doc/js/searcher_js.html">searcher.js</a>
+  
+    <li class="file"><a href="./doc/rdoc_css.html">rdoc.css</a>
+  
+    <li class="file"><a href="./doc/table_of_contents_html.html">table_of_contents.html</a>
+  
+    <li class="file"><a href="./doc/text_txt_html.html">text_txt.html</a>
+  
+    <li class="file"><a href="./irandeal_txt.html">irandeal</a>
+  
+    <li class="file"><a href="./text_txt.html">text</a>
+  
+  </ul>
+</nav>
+
+    <nav id="classindex-section" class="section project-section">
+  <h3 class="section-header">Class and Module Index</h3>
+
+  <ul class="link-list">
+  
+    <li><a href="./Array.html">Array</a>
+  
+    <li><a href="./Dungeon.html">Dungeon</a>
+  
+    <li><a href="./Dungeon/Item.html">Dungeon::Item</a>
+  
+    <li><a href="./Dungeon/Player.html">Dungeon::Player</a>
+  
+    <li><a href="./Dungeon/Room.html">Dungeon::Room</a>
+  
+    <li><a href="./Fixnum.html">Fixnum</a>
+  
+    <li><a href="./Mirrornum.html">Mirrornum</a>
+  
+    <li><a href="./Object.html">Object</a>
+  
+    <li><a href="./String.html">String</a>
+  
+  </ul>
+</nav>
+
+  </div>
+</nav>
+
+<div id="documentation">
+  <h1 class="class">class Dungeon</h1>
+
+  <div id="description" class="description">
+    
+<p><a href="Dungeon.html">Dungeon</a> Text Adventure with Objects</p>
+
+  </div><!-- description -->
+
+  
+  
+  
+  <section id="5Buntitled-5D" class="documentation-section">
+    
+
+    
+
+    
+
+    
+    <!-- Attributes -->
+    <section id="attribute-method-details" class="method-section section">
+      <h3 class="section-header">Attributes</h3>
+
+      
+      <div id="attribute-i-name" class="method-detail">
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">name</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        
+        
+        </div>
+      </div>
+      
+      <div id="attribute-i-player" class="method-detail">
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">player</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        
+        
+        </div>
+      </div>
+      
+    </section><!-- attribute-method-details -->
+    
+
+    <!-- Methods -->
+    
+     <section id="public-class-5Buntitled-5D-method-details" class="method-section section">
+      <h3 class="section-header">Public Class Methods</h3>
+
+    
+      <div id="method-c-new" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">new</span><span
+            class="method-args">(name)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="new-source">
+            <pre><span class="ruby-comment"># File dungeontext.rb, line 6</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">name</span>)
+  <span class="ruby-ivar">@name</span> = <span class="ruby-identifier">name</span>
+  <span class="ruby-ivar">@player</span> = <span class="ruby-constant">Player</span>.<span class="ruby-identifier">new</span>(<span class="ruby-string">&quot;Robert Blake&quot;</span>)
+  <span class="ruby-ivar">@rooms</span> = []
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- new-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- new-method -->
+
+    
+    </section><!-- public-class-method-details -->
+  
+     <section id="public-instance-5Buntitled-5D-method-details" class="method-section section">
+      <h3 class="section-header">Public Instance Methods</h3>
+
+    
+      <div id="method-i-add_room" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">add_room</span><span
+            class="method-args">(reference, name, description, connections)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="add_room-source">
+            <pre><span class="ruby-comment"># File dungeontext.rb, line 12</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">add_room</span>(<span class="ruby-identifier">reference</span>, <span class="ruby-identifier">name</span>, <span class="ruby-identifier">description</span>, <span class="ruby-identifier">connections</span>)
+  <span class="ruby-ivar">@rooms</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-constant">Room</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">reference</span>, <span class="ruby-identifier">name</span>, <span class="ruby-identifier">description</span>, <span class="ruby-identifier">connections</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- add_room-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- add_room-method -->
+
+    
+      <div id="method-i-find_room_in_direction" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">find_room_in_direction</span><span
+            class="method-args">(direction)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="find_room_in_direction-source">
+            <pre><span class="ruby-comment"># File dungeontext.rb, line 42</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">find_room_in_direction</span>(<span class="ruby-identifier">direction</span>)
+  <span class="ruby-identifier">find_room_in_dungeon</span>(<span class="ruby-ivar">@player</span>.<span class="ruby-identifier">location</span>).<span class="ruby-identifier">connections</span>[<span class="ruby-identifier">direction</span>]
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- find_room_in_direction-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- find_room_in_direction-method -->
+
+    
+      <div id="method-i-find_room_in_dungeon" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">find_room_in_dungeon</span><span
+            class="method-args">(reference)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="find_room_in_dungeon-source">
+            <pre><span class="ruby-comment"># File dungeontext.rb, line 38</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">find_room_in_dungeon</span>(<span class="ruby-identifier">reference</span>)
+  <span class="ruby-ivar">@rooms</span>.<span class="ruby-identifier">detect</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">room</span><span class="ruby-operator">|</span> <span class="ruby-identifier">room</span>.<span class="ruby-identifier">reference</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">reference</span> }
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- find_room_in_dungeon-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- find_room_in_dungeon-method -->
+
+    
+      <div id="method-i-go" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">go</span><span
+            class="method-args">(direction)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="go-source">
+            <pre><span class="ruby-comment"># File dungeontext.rb, line 47</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">go</span>(<span class="ruby-identifier">direction</span>)
+  <span class="ruby-identifier">puts</span> <span class="ruby-string">&quot;You go &quot;</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">direction</span>.<span class="ruby-identifier">to_s</span>
+  <span class="ruby-identifier">puts</span> <span class="ruby-string">&quot;hello&quot;</span>
+  <span class="ruby-identifier">puts</span> <span class="ruby-ivar">@player</span>.<span class="ruby-identifier">location</span>.<span class="ruby-identifier">to_s</span>
+  <span class="ruby-ivar">@player</span>.<span class="ruby-identifier">location</span> = <span class="ruby-identifier">find_room_in_direction</span>(<span class="ruby-identifier">direction</span>)
+  <span class="ruby-identifier">puts</span> <span class="ruby-ivar">@player</span>.<span class="ruby-identifier">location</span>.<span class="ruby-identifier">to_s</span>
+  <span class="ruby-identifier">show_current_description</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- go-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- go-method -->
+
+    
+      <div id="method-i-request_action" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">request_action</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="request_action-source">
+            <pre><span class="ruby-comment"># File dungeontext.rb, line 22</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">request_action</span>
+  <span class="ruby-identifier">puts</span> <span class="ruby-string">&quot;where do you want to go&quot;</span>
+  <span class="ruby-identifier">show_current_direction_options</span>
+  <span class="ruby-identifier">ans</span> = <span class="ruby-identifier">gets</span>.<span class="ruby-identifier">chomp</span>
+  <span class="ruby-identifier">go</span>(<span class="ruby-identifier">ans</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- request_action-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- request_action-method -->
+
+    
+      <div id="method-i-show_current_description" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">show_current_description</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="show_current_description-source">
+            <pre><span class="ruby-comment"># File dungeontext.rb, line 34</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">show_current_description</span>
+  <span class="ruby-identifier">puts</span> <span class="ruby-identifier">find_room_in_dungeon</span>(<span class="ruby-ivar">@player</span>.<span class="ruby-identifier">location</span>).<span class="ruby-identifier">full_description</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- show_current_description-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- show_current_description-method -->
+
+    
+      <div id="method-i-show_current_direction_options" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">show_current_direction_options</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="show_current_direction_options-source">
+            <pre><span class="ruby-comment"># File dungeontext.rb, line 30</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">show_current_direction_options</span>
+  <span class="ruby-identifier">puts</span> <span class="ruby-identifier">find_room_in_dungeon</span>(<span class="ruby-ivar">@player</span>.<span class="ruby-identifier">location</span>).<span class="ruby-identifier">full_connections</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- show_current_direction_options-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- show_current_direction_options-method -->
+
+    
+      <div id="method-i-start" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">start</span><span
+            class="method-args">(location)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="start-source">
+            <pre><span class="ruby-comment"># File dungeontext.rb, line 16</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">start</span>(<span class="ruby-identifier">location</span>)
+  <span class="ruby-ivar">@player</span>.<span class="ruby-identifier">location</span> = <span class="ruby-identifier">location</span>
+  <span class="ruby-identifier">show_current_description</span>
+  <span class="ruby-identifier">request_action</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- start-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- start-method -->
+
+    
+    </section><!-- public-instance-method-details -->
+  
+  </section><!-- 5Buntitled-5D -->
+
+</div><!-- documentation -->
+
+
+<footer id="validator-badges">
+  <p><a href="http://validator.w3.org/check/referer">[Validate]</a>
+  <p>Generated by <a href="https://github.com/rdoc/rdoc">RDoc</a> 4.0.0.
+  <p>Generated with the <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish Rdoc Generator</a> 3.
+</footer>
+
