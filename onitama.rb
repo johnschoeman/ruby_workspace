@@ -3,7 +3,13 @@
 # Conventions: white is at top of board.
 
 class Onitama
-  attr_reader :board, :players
+
+  @@card_list = [ :tiger, :dragon, :crab, :elephant, :monkey,
+              :mantis, :crane, :boar, :frog, :rabbit,
+              :goose, :rooster, :horse, :ox, :eel, :cobra]
+
+  attr_reader :board, :players, :cards
+
   def initialize
     @players = [Player.new("player1","white"), Player.new("player2","black")]
     @board = Board.new
@@ -15,7 +21,6 @@ class Onitama
     setup_game
     game_start
     play_next_turn
-    #@board.move_piece(@players[@current_player].get_piece_by_num(0),[2,2])
     @board.print_board
   end
 
@@ -39,7 +44,17 @@ class Onitama
   end
 
   def setup_cards
-    @cards << []
+    while @cards.length < 5
+      card = random_card
+      @cards << card if !@cards.any? {|c| c.card_name == card.card_name }
+    end
+    @players[0].cards << @cards.shift << @cards.shift
+    @players[1].cards << @cards.shift << @cards.shift
+    @board.card << @cards.shift
+  end
+
+  def random_card
+    Card.new(@@card_list[rand(0..15)])
   end
 
   def game_start
@@ -50,7 +65,7 @@ class Onitama
   def play_next_turn
     puts "#{@players[@current_player].name}, it's your turn!"
 
-    #need to write code to handle bad choice here.
+    #need to write code to handle bad choices here.
     while true
       @board.print_board
       choice_piece = get_piece_choice
@@ -113,8 +128,10 @@ end
 
 class Board
   attr_reader :board
+  attr_accessor :card
   def initialize
     @board = Array.new(5){Array.new(5){Piece.new()}}
+    @card = []
   end
 
   def print_board
@@ -226,7 +243,7 @@ end
 
 class Player
   attr_reader :name, :color
-  attr_accessor :pieces, :pieces_lost
+  attr_accessor :pieces, :pieces_lost, :cards
   def initialize(name, color)
     @name = name
     @color = color
@@ -238,6 +255,7 @@ class Player
       0 => Piece.new(self, 0)
     }
     @pieces_lost = []
+    @cards = []
   end
 
   def get_turn_choice(moves)
@@ -275,4 +293,4 @@ class AI < Player
 end
 
 game = Onitama.new
-game.play
+game.setup_game
