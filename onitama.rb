@@ -5,8 +5,8 @@
 class Onitama
 
   @@card_list = [ :tiger, :dragon, :crab, :elephant, :monkey,
-              :mantis, :crane, :boar, :frog, :rabbit,
-              :goose, :rooster, :horse, :ox, :eel, :cobra]
+                  :mantis, :crane, :boar, :frog, :rabbit,
+                  :goose, :rooster, :horse, :ox, :eel, :cobra]
 
   attr_reader :board, :players, :cards
 
@@ -59,18 +59,20 @@ class Onitama
 
   def game_start
     puts "Welcome to Onitama!"
+    puts "Type 'cards' to you your available cards"
+    puts "Type 'exit' to exit"
+    puts "Type 'help' for help"
     @board.print_board
   end
 
   def play_next_turn
-    puts "#{@players[@current_player].name}, it's your turn!"
-
     #need to write code to handle bad choices here.
     while true
+      puts "#{@players[@current_player].name}, it's your turn!"
       @board.print_board
       choice_piece = get_piece_choice
+      choice_card = get_card_choice
       choice_move = get_move_choice(choice_piece)
-      p choice_move
       puts "You have chosen to move #{choice_piece.print_piece} to #{choice_move} continue? (y/n)"
       input = gets.chomp
       if input.downcase == "y"
@@ -92,6 +94,10 @@ class Onitama
     res = @players[@current_player].get_piece_by_name(input)
     puts "You have chosen #{res.print_piece}"
     return res
+  end
+
+  def get_card_choice
+    puts "Chose which card to base your move on: #{@players[@current_player].print_cards}"
   end
 
   def get_move_choice(choice_piece)
@@ -227,13 +233,18 @@ class Piece
   end
 
   def available_moves
-    res = Hash.new(choice_error)
+
+  end
+
+  #returns valid moves of piece at current position, selects only those that fall onto board.
+  def get_valid_moves(card)
     if @color == "white"
-      res[1] = [@position[0]+1,@position[1]]
+      res = card.moves.map { |move| [@position[0] + move[0], @position[1] + move[1]] }
+      return res.select { |move| (0..4).include?(move[0]) && (0..4).include?(move[1]) }
     else
-      res[1] = [@position[0]-1,@position[1]]
+      res = card.moves.map { |move| [@position[0] - move[0], @position[1] - move[1]] }
+      return res.select { |move| (0..4).include?(move[0]) && (0..4).include?(move[1]) }
     end
-    res
   end
 
   def choice_error
@@ -258,11 +269,6 @@ class Player
     @cards = []
   end
 
-  def get_turn_choice(moves)
-    puts "enter your choice"
-    gets.chomp
-  end
-
   def get_piece_by_num(num)
     @pieces[num]
   end
@@ -284,6 +290,12 @@ class Player
     res
   end
 
+  def print_cards
+    res = "Cards: "
+    @cards.each {|card| res += "#{card.card_name}: #{card.moves}"}
+    puts res
+  end
+
   def choice_error(choice)
     "#{choice} is not a vaild choice"
   end
@@ -293,4 +305,4 @@ class AI < Player
 end
 
 game = Onitama.new
-game.setup_game
+game.play
