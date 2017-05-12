@@ -1,36 +1,46 @@
-#A ruby file that plays the boardgame Onitama.
+# A ruby file that plays the boardgame Onitama.
+#
+# Conventions: white is at top of board.
 
 class Onitama
   attr_reader :board, :players
   def initialize
     @players = [Player.new("player1","white"), Player.new("player2","black")]
     @board = Board.new
+    @cards = []
     @current_player = 0
   end
 
   def play
-    initialize_pieces
+    setup_game
     game_start
     play_next_turn
-    #@board.move_piece(@players[@current_player].get_piece(0),[2,2])
+    #@board.move_piece(@players[@current_player].get_piece_by_num(0),[2,2])
     @board.print_board
   end
 
-  def initialize_pieces
-    @board.place_piece(@players[0].get_piece(0),[0,2])
-    @board.place_piece(@players[1].get_piece(0),[4,2])
+  def setup_game
+    setup_pieces
+    setup_cards
+  end
+
+  def setup_pieces
+    @board.place_piece(@players[0].get_piece_by_num(0),[0,2])
+    @board.place_piece(@players[1].get_piece_by_num(0),[4,2])
     (1..4).each do |n|
       if n==1||n==2
-        @board.place_piece(@players[0].get_piece(n),[0,n-1])
-        @board.place_piece(@players[1].get_piece(n),[4,n-1])
+        @board.place_piece(@players[0].get_piece_by_num(n),[0,n-1])
+        @board.place_piece(@players[1].get_piece_by_num(n),[4,n-1])
       else
-        @board.place_piece(@players[0].get_piece(n),[0,n])
-        @board.place_piece(@players[1].get_piece(n),[4,n])
+        @board.place_piece(@players[0].get_piece_by_num(n),[0,n])
+        @board.place_piece(@players[1].get_piece_by_num(n),[4,n])
       end
     end
   end
 
-
+  def setup_cards
+    @cards << []
+  end
 
   def game_start
     puts "Welcome to Onitama!"
@@ -39,8 +49,48 @@ class Onitama
 
   def play_next_turn
     puts "#{@players[@current_player].name}, it's your turn!"
+
+    #need to write code to handle bad choice here.
+    while true
+      @board.print_board
+      choice_piece = get_piece_choice
+      choice_move = get_move_choice(choice_piece)
+      p choice_move
+      puts "You have chosen to move #{choice_piece.print_piece} to #{choice_move} continue? (y/n)"
+      input = gets.chomp
+      if input.downcase == "y"
+        @board.move_piece(choice_piece, choice_move)
+      elsif input == "exit"
+        break
+      else
+        next
+      end
+      player_switch
+    end
+
+  end
+
+  def get_piece_choice
     puts "Chose which piece you'd like to move: "
     puts "Availabe Pieces: #{@players[@current_player].available_pieces}"
+    input = gets.chomp
+    res = @players[@current_player].get_piece_by_name(input)
+    puts "You have chosen #{res.print_piece}"
+    return res
+  end
+
+  def get_move_choice(choice_piece)
+    puts "Chose which spot to move #{choice_piece.print_piece} to:"
+    puts "Current Position: #{choice_piece.position}"
+    puts "Availabe Moves: #{choice_piece.available_moves}"
+    input = gets.chomp
+    res = choice_piece.available_moves[input.to_i]
+    puts "You have chosen #{res}"
+    return res
+  end
+
+  def isMoveValid?(piece,to_pos)
+
   end
 
   def player_switch
@@ -68,16 +118,18 @@ class Board
   end
 
   def print_board
-    puts "-"*23
-    @board.each do |row|
-      temp = "| "
+    puts "  |  0   1   2   3   4  |  "
+    puts "-"*27
+    @board.each_with_index do |row, i|
+      temp = "#{i} | "
       row.each do |col|
         temp += "#{col.print_piece} "
       end
-      temp += "|"
+      temp += "| #{i}"
       puts temp
     end
-    puts "-"*23
+    puts "-"*27
+    puts "  |  0   1   2   3   4  |  "
   end
 
   def place_piece(piece,to_pos)
@@ -104,6 +156,35 @@ class Board
 
 end
 
+class Card
+
+  @@card_dic = {
+    tiger:    [[2,0],[-1,0]],
+    dragon:   [[0,-2],[0,2],[-1,1],[-1,-1]],
+    crab:     [[1,0],[0,2],[0,-2]],
+    elephant: [[1,-1],[1,1],[0,-1],[0,1]],
+    monkey:   [[1,-1],[1,1],[-1,1],[-1,-1]],
+    mantis:   [[1,-1],[1,1],[-1,0]],
+    crane:    [[1,0],[-1,1],[-1,-1]],
+    boar:     [[1,0],[0,-1],[0,1]],
+    frog:     [[0,-2],[1,-1],[-1,1]],
+    rabbit:   [[-1,-1],[1,1],[0,2]],
+    goose:    [[1,-1],[0,-1],[0,1],[-1,1]],
+    rooster:  [[-1,-1],[0,-1],[0,1],[1,-1]],
+    horse:    [[1,0],[0,-1],[-1,0]],
+    ox:       [[1,0],[0,1],[-1,0]],
+    eel:      [[1,-1],[0,1],[-1,-1]],
+    cobra:    [[0,-1],[1,1],[1,-1]]
+  }
+
+  attr_reader :card_name, :moves
+
+  def initialize(card_name)
+    @card_name = card_name
+    @moves = @@card_dic[@card_name]
+  end
+end
+
 class Piece
   attr_reader :owner, :color, :number
   attr_accessor :position
@@ -124,22 +205,39 @@ class Piece
     end
   end
 
+  def print_name
+    return @number == 0 ? "S" : "#{@number}"
+  end
+
+  def available_moves
+    res = Hash.new(choice_error)
+    if @color == "white"
+      res[1] = [@position[0]+1,@position[1]]
+    else
+      res[1] = [@position[0]-1,@position[1]]
+    end
+    res
+  end
+
+  def choice_error
+    "Not a valid choice"
+  end
 end
 
 class Player
-  attr_reader :name, :color, :pieces, :pieces_lost, :gamesWon
+  attr_reader :name, :color
+  attr_accessor :pieces, :pieces_lost
   def initialize(name, color)
     @name = name
     @color = color
-    @gamesWon = 0
-    @pieces = []
-    (1..4).each {|n| @pieces << Piece.new(self, n)}
-    @pieces << Piece.new(self, 0)
+    @pieces = {
+      1 => Piece.new(self, 1),
+      2 => Piece.new(self, 2),
+      3 => Piece.new(self, 3),
+      4 => Piece.new(self, 4),
+      0 => Piece.new(self, 0)
+    }
     @pieces_lost = []
-  end
-
-  def wonAGame
-    @gamesWon += 1
   end
 
   def get_turn_choice(moves)
@@ -147,35 +245,34 @@ class Player
     gets.chomp
   end
 
-  def get_piece(num)
-    @pieces.select {|n| n.number == num }[0]
+  def get_piece_by_num(num)
+    @pieces[num]
+  end
+
+  def get_piece_by_name(name)
+    case name
+      when "1","2","3","4"
+        return @pieces[name.to_i]
+      when "s","S"
+        return @pieces[0]
+      else
+        return choice_error(name)
+    end
   end
 
   def available_pieces
-    @pieces.map { |piece| piece.print_piece }
+    res = []
+    @pieces.each {|_,v| res << v.print_name}
+    res
+  end
+
+  def choice_error(choice)
+    "#{choice} is not a vaild choice"
   end
 end
 
 class AI < Player
-  def get_turn_choice(moves)
-    moves[rand(0...moves.length)].to_s
-  end
-
 end
 
 game = Onitama.new
 game.play
-
-s1 = game.players[1].get_piece(0)
-s2 = game.players[0].get_piece(0)
-game.board.move_piece(s2,[1,1])
-game.board.print_board
-game.board.move_piece(s1, [2,3])
-game.board.print_board
-game.board.move_piece(s2, [2,3])
-game.board.print_board
-
-# player = Player.new("player1", "white")
-# player.pieces.each {|piece| p piece.number}
-# p player.get_piece(0).print_piece
-# p player.get_piece(1).print_piece
