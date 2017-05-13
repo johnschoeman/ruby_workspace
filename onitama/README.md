@@ -1,18 +1,20 @@
-* README - Onitama
+# README - Onitama
 
 The boardgame of Onitama built in ruby.
 
 * Ruby Version: 2.3
 
-* Set Up
+# Set Up
+
 This will play in your terminal.
 Save the files and run 'ruby play_onitama.rb' to play.
 
-* Conventions:
-- player1 color is white and is at top of board.
-- player2 color is black and is at bottom of board.
+# Conventions:
 
-* Game Rules:
+* player1 color is white and is at top of board.
+* player2 color is black and is at bottom of board.
+
+# Game Rules:
 
 https://boardgamegeek.com/boardgame/160477/onitama
 
