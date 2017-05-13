@@ -1,6 +1,4 @@
-# A ruby file that plays the boardgame Onitama.
-#
-# Conventions: white is at top of board.
+# A ruby file that plays the boardgame Onitama, see README
 
 class Onitama
 
@@ -11,24 +9,30 @@ class Onitama
   attr_reader :board, :players, :cards
 
   def initialize
-    @players = [Player.new("player1","white"), Player.new("player2","black")]
+    @players = []
     @board = Board.new
     @cards = []
     @current_player = 0
+    setup_game
   end
 
   def play
-    setup_game
     game_start
     play_next_turn
     @board.print_board
   end
 
   def setup_game
+    setup_players
     setup_pieces
     setup_cards
   end
 
+  def setup_players
+    @players = [Player.new("player1","white"), Player.new("player2","black")]
+  end
+
+  # Get pieces from players and place on board
   def setup_pieces
     @board.place_piece(@players[0].get_piece_by_num(0),[0,2])
     @board.place_piece(@players[1].get_piece_by_num(0),[4,2])
@@ -43,6 +47,7 @@ class Onitama
     end
   end
 
+  # Choose 5 cards at random and assign 2 to each player and 1 to the board.
   def setup_cards
     while @cards.length < 5
       card = random_card
@@ -303,6 +308,3 @@ end
 
 class AI < Player
 end
-
-game = Onitama.new
-game.play
