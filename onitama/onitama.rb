@@ -1,4 +1,4 @@
-# A ruby file that plays the boardgame Onitama, see README
+# A ruby file that plays the boardgame Onitama, see README.
 
 class Onitama
 
