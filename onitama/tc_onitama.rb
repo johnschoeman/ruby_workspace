@@ -15,4 +15,14 @@ class TestOnitama < Test::Unit::TestCase
     assert_not_nil(@game.players)
   end
 
+  def test_pieces
+    @games.players[0].pieces.each do |num, piece|
+      assert_equal(piece.class, "Piece")
+    end
+  end
+
+  # def test_quit_game
+  #   assert_equal(@game.quit_game, nil)
+  # end
+
 end
