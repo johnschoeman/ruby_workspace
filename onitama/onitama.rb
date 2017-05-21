@@ -1,4 +1,7 @@
 # A ruby file that plays the boardgame Onitama, see README.
+require 'open-uri'
+
+
 
 class Onitama
 
@@ -9,7 +12,8 @@ class Onitama
   @@help_message = "\tType 'board' or 'b' to show the board
   \tType 'cards' or 'c' to show your available cards
   \tType 'quit' or 'q' to exit
-  \tType 'help' or 'h' for help"
+  \tType 'help' or 'h' for help
+  \tType 'rules' or 'r' for rules"
 
   attr_reader :board, :players, :cards
 
@@ -134,6 +138,15 @@ class Onitama
             @board.print_board
           when "help", "h"
             puts @@help_message
+          when "rules", "r"
+            link = "http://www.arcanewonders.com/resources/Onitama_Rulebook.PDF"
+            if RbConfig::CONFIG['host_os'] =~ /mswin|mingw|cygwin/
+              system "start #{link}"
+            elsif RbConfig::CONFIG['host_os'] =~ /darwin/
+              system "open #{link}"
+            elsif RbConfig::CONFIG['host_os'] =~ /linux|bsd/
+              system "xdg-open #{link}"
+            end
           else
             puts input_error(user_input)
           end

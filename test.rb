@@ -1,3 +1,5 @@
+#!/usr/bin/env ruby
+
 class String
   def is_number?
     true if Float(self) rescue false
@@ -27,3 +29,4 @@ t.size.times do |x|
 end
 
 p arr
+puts "Hello"
