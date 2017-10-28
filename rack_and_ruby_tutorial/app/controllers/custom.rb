@@ -1,3 +1,5 @@
+require_relative 'base_controller'
+
 class Custom < BaseController
   
   def index

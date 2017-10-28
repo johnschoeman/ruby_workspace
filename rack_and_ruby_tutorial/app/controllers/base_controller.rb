@@ -1,4 +1,4 @@
-require File.join(File.dirname(FILE), '..', '..', 'lib', 'response')
+require File.join(File.dirname(__FILE__), '..', '..', 'lib', 'response')
 
 class BaseController
   attr_reader :env

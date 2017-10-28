@@ -18,6 +18,6 @@ class Route
   end
 
   def handle_requires
-    require File.join(File.dirname(__FILE__), '../', 'app', 'controllers', klass_name.downcase + '.rb')
+    require File.join(File.dirname(__FILE__), '../', 'app', 'controllers', @klass_name.downcase + '.rb')
   end
 end
