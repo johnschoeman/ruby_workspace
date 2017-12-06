@@ -25,6 +25,7 @@ end
 
 get '/' do
   guess = params["guess"]
+  cheat = params["cheat"]
   message, background_color = check_guess(guess.to_i) unless guess.nil?
   @@guess_count -= 1
   if @@guess_count == 0
@@ -34,6 +35,7 @@ get '/' do
   erb :index, locals: {
     number: @@secret_number, 
     message: message, 
-    background_color: background_color
+    background_color: background_color,
+    cheat: cheat
   }
 end
