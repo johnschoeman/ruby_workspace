@@ -1,0 +1,20 @@
+<% if @message %>
+  <p><%= @message %></p>
+<% end %>
+
+<% unless @name.to_s.empty? %>
+  <h3><%= "hi #{@name}"%></h3>
+<% end %>
+
+<form action="/form" method="post">
+  <input type="text" name="name" value="<%= @name %>">
+  <input type="submit">
+</form>
+
+<% if @names %>
+  <ul>
+    <% @names.each do |name| %>
+      <li><%= name %></li>
+    <% end %>
+  </ul>
+<% end %>
