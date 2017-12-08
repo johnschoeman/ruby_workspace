@@ -1,0 +1,18 @@
+<h2>Members</h2>
+<% if @message %>
+  <p><%= @message %></p>
+<% end %>
+<% if @members %>
+  <ul>
+  <% @members.each do |member| %>
+    <li>
+      <a href=<%= "/members/#{member}"%>><%= member %></a> 
+      <a href=<%= "/members/#{member}/edit"%>>Edit</a>
+      <a href=<%= "/members/#{member}/delete"%>>Delete</a>
+    </li>
+  <% end %>
+  </ul>
+<% end %>
+
+<br />
+<a href="/members/new">Add a new member</a>

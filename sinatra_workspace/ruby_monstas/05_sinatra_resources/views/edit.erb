@@ -1,0 +1,11 @@
+<h2>Edit member</h2>
+<% if @message %>
+  <p><%= @message %></p>
+<% end %>
+<form action=<%= "/members/#{@name}/edit" %> method="POST">
+  <input type="hidden" name="_method" value="put">
+  <input type="hidden" name="old_name" value=<%= @name %> >
+  <input type="text" name="new_name">
+  <input type="submit" value="edit">
+</form>
+<a href="/members">Back</a>
