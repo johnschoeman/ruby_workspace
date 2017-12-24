@@ -35,7 +35,7 @@ class Mailer
 end
 
 require "benchmark"
-require "celluloid"
+require "celluloid/current"
 
 class MailWorker
   include Celluloid
