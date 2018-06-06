@@ -1,51 +1,71 @@
+Sulfas = 'Sulfuras, Hand of Ragnaros'
+Passes = 'Backstage passes to a TAFKAL80ETC concert'
+Brie = 'Aged Brie'
+
+MaxQuality = 50
+
 def update_quality(items)
   items.each do |item|
-    if item.name != 'Aged Brie' && item.name != 'Backstage passes to a TAFKAL80ETC concert'
-      if item.quality > 0
-        if item.name != 'Sulfuras, Hand of Ragnaros'
-          item.quality -= 1
-        end
+    case item.name
+    when Sulfas
+      puts "sulfas was here"
+      next
+    when Brie
+      deal_with_brie(item)
+      if expired?(item)
+        increment_quality(item)
       end
+    when Passes
+      deal_with_passes(item)
     else
-      if item.quality < 50
-        item.quality += 1
-        if item.name == 'Backstage passes to a TAFKAL80ETC concert'
-          if item.sell_in < 11
-            if item.quality < 50
-              item.quality += 1
-            end
-          end
-          if item.sell_in < 6
-            if item.quality < 50
-              item.quality += 1
-            end
-          end
-        end
+      decrement_quality(item)
+      if expired?(item)
+        decrement_quality(item)
       end
     end
-    if item.name != 'Sulfuras, Hand of Ragnaros'
-      item.sell_in -= 1
-    end
-    if item.sell_in < 0
-      if item.name != "Aged Brie"
-        if item.name != 'Backstage passes to a TAFKAL80ETC concert'
-          if item.quality > 0
-            if item.name != 'Sulfuras, Hand of Ragnaros'
-              item.quality -= 1
-            end
-          end
-        else
-          item.quality = item.quality - item.quality
-        end
-      else
-        if item.quality < 50
-          item.quality += 1
-        end
-      end
-    end
+
+    item.sell_in -= 1
+end
+
+def expired?(item)
+  item.sell_in < 0
+end
+
+def decrement_quality(item)
+  if item.quality > 0
+    item.quality -= 1
   end
 end
 
+def increment_quality(item)
+  if item.quality < MaxQuality
+    item.quality += 1
+  end
+end
+
+def deal_with_passes(item)
+  if item.quality < MaxQuality
+    item.quality += 1
+    if item.sell_in < 11
+      increment_quality(item)
+    end
+    if item.sell_in < 6
+      increment_quality(item)
+    end
+  end
+  if expired?(item)
+    item.quality = 0
+  end
+end
+
+def deal_with_brie(item)
+  if item.quality < MaxQuality
+    item.quality += 1
+  end
+  if expired?(item)
+    increment_quality(item)
+  end
+end
 # DO NOT CHANGE THINGS BELOW -----------------------------------------
 
 Item = Struct.new(:name, :sell_in, :quality)
