@@ -1,7 +1,6 @@
 require 'rspec'
+require 'pry'
 require_relative '../gilded_rose'
-
-
 
 describe "update_quality" do
 
@@ -76,4 +75,270 @@ describe "update_quality" do
     end
   end
   
+  context "Brie" do
+    
+    it "before sell date" do
+      name = "Aged Brie"
+      initial_sell_in = 5
+      initial_quality = 10
+      item = Item.new(name, initial_sell_in, initial_quality)
+      updated_item = update_quality([item]).first
+      expected_sell_in = initial_sell_in - 1
+      expected_quality = initial_quality + 1
+      expect(updated_item.sell_in).to eq expected_sell_in
+      expect(updated_item.quality).to eq expected_quality
+    end
+
+    it "before sell date with max quality" do
+      name = "Aged Brie"
+      initial_sell_in = 5
+      initial_quality = 50
+      item = Item.new(name, initial_sell_in, initial_quality)
+      updated_item = update_quality([item]).first
+      expected_sell_in = initial_sell_in - 1
+      expected_quality = initial_quality
+      expect(updated_item.sell_in).to eq expected_sell_in
+      expect(updated_item.quality).to eq expected_quality
+    end
+
+    it "on sell date" do
+      name = "Aged Brie"
+      initial_sell_in = 5
+      initial_quality = 10
+      item = Item.new(name, initial_sell_in, initial_quality)
+      updated_item = update_quality([item]).first
+      expected_sell_in = 4
+      expected_quality = 11
+      expect(updated_item.sell_in).to eq expected_sell_in
+      expect(updated_item.quality).to eq expected_quality
+    end
+    
+    it "on sell date near max quality" do
+      name = "Aged Brie"
+      initial_sell_in = 0
+      initial_quality = 49
+      item = Item.new(name, initial_sell_in, initial_quality)
+      updated_item = update_quality([item]).first
+      expected_sell_in = -1
+      expected_quality = 50
+      expect(updated_item.sell_in).to eq expected_sell_in
+      expect(updated_item.quality).to eq expected_quality
+    end
+
+    it "on sell date with max quality" do
+      name = "Aged Brie"
+      initial_sell_in = 0
+      initial_quality = 50
+      item = Item.new(name, initial_sell_in, initial_quality)
+      updated_item = update_quality([item]).first
+      expected_sell_in = initial_sell_in - 1
+      expected_quality = initial_quality
+      expect(updated_item.sell_in).to eq expected_sell_in
+      expect(updated_item.quality).to eq expected_quality
+    end
+
+    it "after sell date with 10 quality" do
+      name = "Aged Brie"
+      initial_sell_in = -10
+      initial_quality = 10
+      item = Item.new(name, initial_sell_in, initial_quality)
+      updated_item = update_quality([item]).first
+      expected_sell_in = -11
+      expected_quality = 12
+      expect(updated_item.sell_in).to eq expected_sell_in
+      expect(updated_item.quality).to eq expected_quality
+    end
+
+    it "after sell date with max quality" do
+      name = "Aged Brie"
+      initial_sell_in = -10
+      initial_quality = 50
+      item = Item.new(name, initial_sell_in, initial_quality)
+      updated_item = update_quality([item]).first
+      expected_sell_in = initial_sell_in - 1
+      expected_quality = initial_quality
+      expect(updated_item.sell_in).to eq expected_sell_in
+      expect(updated_item.quality).to eq expected_quality
+    end
+  end
+
+  context "Sulfuras" do
+
+    it "before sell date" do
+      name = "Sulfuras, Hand of Ragnaros"
+      initial_sell_in = 5
+      initial_quality = 80
+      item = Item.new(name, initial_sell_in, initial_quality)
+      updated_item = update_quality([item]).first
+      expected_sell_in = 5
+      expected_quality = 80
+      expect(updated_item.sell_in).to eq expected_sell_in
+      expect(updated_item.quality).to eq expected_quality
+    end
+
+    it "on sell date" do
+      name = "Sulfuras, Hand of Ragnaros"
+      initial_sell_in = 0
+      initial_quality = 80
+      item = Item.new(name, initial_sell_in, initial_quality)
+      updated_item = update_quality([item]).first
+      expected_sell_in = 0
+      expected_quality = 80
+      expect(updated_item.sell_in).to eq expected_sell_in
+      expect(updated_item.quality).to eq expected_quality
+    end
+
+    it "after sell date" do
+      name = "Sulfuras, Hand of Ragnaros"
+      initial_sell_in = -10
+      initial_quality = 80
+      item = Item.new(name, initial_sell_in, initial_quality)
+      updated_item = update_quality([item]).first
+      expected_sell_in = -10
+      expected_quality = 80
+      expect(updated_item.sell_in).to eq expected_sell_in
+      expect(updated_item.quality).to eq expected_quality
+    end
+  end
+
+  context "Passes" do
+
+    it "long before sell date" do
+      name = 'Backstage passes to a TAFKAL80ETC concert'
+      initial_sell_in = 11
+      initial_quality = 10
+      item = Item.new(name, initial_sell_in, initial_quality)
+      updated_item = update_quality([item]).first
+      expected_sell_in = 10
+      expected_quality = 11
+      expect(updated_item.sell_in).to eq expected_sell_in
+      expect(updated_item.quality).to eq expected_quality
+    end
+
+    it "long before sell date at max quality" do
+      name = 'Backstage passes to a TAFKAL80ETC concert'
+      initial_sell_in = 11
+      initial_quality = 50
+      item = Item.new(name, initial_sell_in, initial_quality)
+      updated_item = update_quality([item]).first
+      expected_sell_in = 10
+      expected_quality = 50
+      expect(updated_item.sell_in).to eq expected_sell_in
+      expect(updated_item.quality).to eq expected_quality
+    end
+
+
+    it "medium close to sell date" do
+      name = 'Backstage passes to a TAFKAL80ETC concert'
+      initial_sell_in = 10
+      initial_quality = 10
+      item = Item.new(name, initial_sell_in, initial_quality)
+      updated_item = update_quality([item]).first
+      expected_sell_in = 9
+      expected_quality = 12
+      expect(updated_item.sell_in).to eq expected_sell_in
+      expect(updated_item.quality).to eq expected_quality
+    end
+    
+
+    it "medium close to sell date at max quality" do
+      name = 'Backstage passes to a TAFKAL80ETC concert'
+      initial_sell_in = 10
+      initial_quality = 50
+      item = Item.new(name, initial_sell_in, initial_quality)
+      updated_item = update_quality([item]).first
+      expected_sell_in = 9
+      expected_quality = 50
+      expect(updated_item.sell_in).to eq expected_sell_in
+      expect(updated_item.quality).to eq expected_quality
+    end
+
+    it "medium close to sell date, lower bound" do
+      name = 'Backstage passes to a TAFKAL80ETC concert'
+      initial_sell_in = 6
+      initial_quality = 10
+      item = Item.new(name, initial_sell_in, initial_quality)
+      updated_item = update_quality([item]).first
+      expected_sell_in = 5
+      expected_quality = 12
+      expect(updated_item.sell_in).to eq expected_sell_in
+      expect(updated_item.quality).to eq expected_quality
+    end
+
+    it "medium close to sell date, lower bound, at max" do
+      name = 'Backstage passes to a TAFKAL80ETC concert'
+      initial_sell_in = 6
+      initial_quality = 50
+      item = Item.new(name, initial_sell_in, initial_quality)
+      updated_item = update_quality([item]).first
+      expected_sell_in = 5
+      expected_quality = 50
+      expect(updated_item.sell_in).to eq expected_sell_in
+      expect(updated_item.quality).to eq expected_quality
+    end
+
+    it "very close to sell date" do
+      name = 'Backstage passes to a TAFKAL80ETC concert'
+      initial_sell_in = 5
+      initial_quality = 10
+      item = Item.new(name, initial_sell_in, initial_quality)
+      updated_item = update_quality([item]).first
+      expected_sell_in = 4
+      expected_quality = 13
+      expect(updated_item.sell_in).to eq expected_sell_in
+      expect(updated_item.quality).to eq expected_quality
+    end
+
+    it "very close to sell date, at max" do
+      name = 'Backstage passes to a TAFKAL80ETC concert'
+      initial_sell_in = 5
+      initial_quality = 50
+      item = Item.new(name, initial_sell_in, initial_quality)
+      updated_item = update_quality([item]).first
+      expected_sell_in = 4
+      expected_quality = 50
+      expect(updated_item.sell_in).to eq expected_sell_in
+      expect(updated_item.quality).to eq expected_quality
+    end
+
+    it "very close to sell date, lower bound, at max" do
+      name = 'Backstage passes to a TAFKAL80ETC concert'
+      initial_sell_in = 1
+      initial_quality = 10
+      item = Item.new(name, initial_sell_in, initial_quality)
+      updated_item = update_quality([item]).first
+      expected_sell_in = 0
+      expected_quality = 13
+      expect(updated_item.sell_in).to eq expected_sell_in
+      expect(updated_item.quality).to eq expected_quality
+    end
+    
+
+    it "on sell date" do
+      name = 'Backstage passes to a TAFKAL80ETC concert'
+      initial_sell_in = 0
+      initial_quality = 10
+      item = Item.new(name, initial_sell_in, initial_quality)
+      updated_item = update_quality([item]).first
+      expected_sell_in = -1
+      expected_quality = 0
+      expect(updated_item.sell_in).to eq expected_sell_in
+      expect(updated_item.quality).to eq expected_quality
+    end
+
+    it "after sell date" do
+      name = 'Backstage passes to a TAFKAL80ETC concert'
+      initial_sell_in = -10
+      initial_quality = 10
+      item = Item.new(name, initial_sell_in, initial_quality)
+      updated_item = update_quality([item]).first
+      expected_sell_in = -11
+      expected_quality = 0
+      expect(updated_item.sell_in).to eq expected_sell_in
+      expect(updated_item.quality).to eq expected_quality
+    end
+
+
+  end
+
 end
