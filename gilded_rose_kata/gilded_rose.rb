@@ -1,6 +1,6 @@
-Sulfas = 'Sulfuras, Hand of Ragnaros'
+SulfasName = 'Sulfuras, Hand of Ragnaros'
 Passes = 'Backstage passes to a TAFKAL80ETC concert'
-Brie = 'Aged Brie'
+BrieName = 'Aged Brie'
 
 MaxQuality = 50
 
@@ -11,6 +11,19 @@ class Item
     @name = name
     @sell_in = sell_in
     @quality = quality
+  end
+
+  def self.create(name, sell_in, quality)
+    case name
+    when Passes
+      Pass.new(name, sell_in, quality)
+    when BrieName
+      Brie.new(name, sell_in, quality)
+    when SulfasName
+      Sulfas.new(name, sell_in, quality)
+    else
+      new(name, sell_in, quality)
+    end
   end
 
   def ==(other)
@@ -46,49 +59,39 @@ class Item
   end
 end
 
-def update_quality(items)
-  items.each do |item|
-    case item.name
-    when Sulfas
-      next
-    when Brie
-      deal_with_brie(item)
-    when Passes
-      deal_with_passes(item)
-    else
-      item.update_quality
+class Pass < Item
+  def update_quality
+    self.increment_quality
+    if self.sell_in < 11
+      self.increment_quality
+    end
+    if self.sell_in < 6
+      self.increment_quality
+    end
+    self.decrement_sell_in
+    if self.expired?
+      self.quality = 0
     end
   end
 end
 
-# def increment_quality(item)
-#   if item.quality < MaxQuality
-#     item.quality += 1
-#   end
-# end
-
-def deal_with_passes(item)
-  item.increment_quality
-  if item.sell_in < 11
-    item.increment_quality
-  end
-  if item.sell_in < 6
-    item.increment_quality
-  end
-  item.decrement_sell_in
-  if item.expired?
-    item.quality = 0
+class Brie < Item
+  def update_quality
+    self.increment_quality
+    self.sell_in -= 1
+    if self.expired?
+      self.increment_quality
+    end
   end
 end
 
-def deal_with_brie(item)
-  item.increment_quality
-  item.sell_in -= 1
-  if item.expired?
-    item.increment_quality
-  end
+class Sulfas < Item
+  def update_quality; end
 end
-# DO NOT CHANGE THINGS BELOW -----------------------------------------
+
+def update_quality(items)
+  items.each(&:update_quality)
+end
 
 # Item = Struct.new(:name, :sell_in, :quality)
 
