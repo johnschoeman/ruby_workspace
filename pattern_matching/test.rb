@@ -11,26 +11,7 @@ class ExtractData
 
   def extract_data_as_hash
     case JSON.parse(@response, symbolize_names: true)
-    in {
-      results: [
-        {
-          statement_id: id,
-          series: [
-            { 
-              name: series_one_name,
-              tags: { tag_name: tag_one },
-              values: [*rest_one, [_, value_one]]
-            },
-            {
-              name: series_two_name,
-              tags: { tag_name: tag_two },
-              values: [*rest_two, [_, value_two]]
-            }
-          ]
-        }
-      ]
-    }
-
+    in {results: [ { statement_id: id, series: [ { name: series_one_name, tags: { tag_name: tag_one }, values: [*rest_one, [_, value_one]] }, { name: series_two_name, tags: { tag_name: tag_two }, values: [*rest_two, [_, value_two]] } ] } ] } 
     {
       "#{tag_one}": {
       tag: tag_one,
@@ -41,27 +22,6 @@ class ExtractData
       count: value_two
       }
     }
-    end
-  end
-
-  def extract_tag_one_data(single_series)
-    {
-      tag: get_tag_one_from_series(single_series),
-      count: get_count_from_series(single_series),
-    }
-  end
-
-  def get_tag_one_from_series(series)
-    case series
-    in { tags: { tag_one: tag }}
-      tag
-    end
-  end
-
-  def get_count_from_series(series)
-    case series
-    in { values: values }
-      values.map(&:last).max
     end
   end
 end
