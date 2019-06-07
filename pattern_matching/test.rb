@@ -1,46 +1,30 @@
 require 'json'
 
-class PatternMatchTester
+class ExtractData
   def initialize(data)
     @response = data
   end
 
-  # rubocop:disable Metrics/LineLength
-  #
-  # InfluxDB returns a json formated resonse as string
-  #
-  # if there are hits from the count_query, a result will look like:
-  # "{\"results\":[{\"statement_id\":0,\"series\":[{\"name\":\"Vorro Hits\",\"tags\":{\"mds_npi\":\"123\"},\"columns\":[\"time\",\"count\"],\"values\":[[\"2018-07-19T18:50:04.640075045Z\",189]]}]}]}"
-  #
-  # if there are no hits, the reslut will look like:
-  # "{\"results\":[{\"statement_id\":0}]}"
-  #
-  # rubocop:enable Metrics/LineLength
-
-  def extract_npi_data_from_response
-    extract_data_as_hash
+  def self.call(data)
+    new(data).extract_data_as_hash
   end
 
   def extract_data_as_hash
     series.
-      map { |single_series| extract_single_npi_data(single_series) }.
-      map { |npi_data| [npi_data[:npi], npi_data] }.
+      map { |single_series| extract_tag_one_data(single_series) }.
+      map { |tag_data| [tag_data[:tag], tag_data] }.
       to_h
   end
 
-  def extract_single_npi_data(single_series)
+  def extract_tag_one_data(single_series)
     {
-      npi: get_npi_from_series(single_series),
+      tag: get_tag_one_from_series(single_series),
       count: get_count_from_series(single_series),
-      duration: @duration
     }
   end
 
-  # rubocop:disable Metrics/LineLength
-  # {"name"=>"Vorro Hits", "tags"=>{"mds_npi"=>"121"}, "columns"=>["time", "count"], "values"=>[["2018-07-29T17:52:46.177038916Z", 0], ["2018-07-29T17:52:46.177038916Z", 20]}
-  # rubocop:enable Metrics/LineLength
-  def get_npi_from_series(series)
-    series.dig("tags", "mds_npi")
+  def get_tag_one_from_series(series)
+    series.dig("tags", "tag_one")
   end
 
   def get_count_from_series(series)
@@ -53,9 +37,16 @@ class PatternMatchTester
 end
 
 data =
-  "{\"results\":[{\"statement_id\":0,\"series\":[{\"name\":\"Vorro Hits\",\"tags\":{\"mds_npi\":\"123\"},\"columns\":[\"time\",\"count\"],\"values\":[[\"2018-07-19T18:50:04.640075045Z\",189]]}]}]}"
+  "{\"results\":[{\"statement_id\":0,\"series\":[
+{\"name\":\"SeriesOne\",\"tags\":{\"tag_one\":\"123\"},\"columns\":[\"time\",\"count\"],\"values\":[
+[\"2018-07-19T18:50:04.640075045Z\",1],
+[\"2018-07-19T18:50:05.640075045Z\",2],
+[\"2018-07-19T18:50:06.640075045Z\",3]
+]},
+{\"name\":\"SeriesTwo\",\"tags\":{\"tag_one\":\"456\"},\"columns\":[\"time\",\"count\"],\"values\":[[\"2018-07-19T18:50:04.640075045Z\",189]]}
 
-service = PatternMatchTester.new(data)
-result = service.extract_npi_data_from_response
+]}]}"
+
+result = ExtractData.call(data)
 p result
-p result == {"123"=>{:npi=>"123", :count=>189, :duration=>nil}}
+p result == {"123"=>{:tag=>"123", :count=>189}, "456"=>{:tag=>"456", :count=>189}}
