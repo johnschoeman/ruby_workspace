@@ -9,9 +9,10 @@ class ExtractData
     new(data).extract_data_as_hash
   end
 
+
   def extract_data_as_hash
     case JSON.parse(@response, symbolize_names: true)
-    in {results: [ { statement_id: id, series: [ { name: series_one_name, tags: { tag_name: tag_one }, values: [*rest_one, [_, value_one]] }, { name: series_two_name, tags: { tag_name: tag_two }, values: [*rest_two, [_, value_two]] } ] } ] } 
+    in {results: [ { statement_id: id, series: [ { name: series_one_name, tags: { tag_name: tag_one }, values: [*_rest_one, [_, value_one]] }, { name: series_two_name, tags: { tag_name: tag_two }, values: [*_rest_two, [_, value_two]] } ] } ] } 
     {
       "#{tag_one}": {
       tag: tag_one,
@@ -22,6 +23,17 @@ class ExtractData
       count: value_two
       }
     }
+    end
+  end
+
+  def self.extract(data)
+    data.dig(:foo, 0, :bar, 1)
+  end
+
+  def self.pm_extract(data)
+    case data
+    in { foo: [{ bar: [_, value]}, *_rest] }
+      value
     end
   end
 end
@@ -40,6 +52,11 @@ data =
 
 }]}"
 
-result = ExtractData.call(data)
-p result
-p result == {"123"=>{:tag=>"123", :count=>3}, "456"=>{:tag=>"456", :count=>189}}
+# result = ExtractData.call(data)
+# p result
+# p result == {"123"=>{:tag=>"123", :count=>3}, "456"=>{:tag=>"456", :count=>189}}
+
+data = { foo: [{ bar: [0, 1]}, {}] }
+ExtractData.extract(data)
+ExtractData.pm_extract(data)
+

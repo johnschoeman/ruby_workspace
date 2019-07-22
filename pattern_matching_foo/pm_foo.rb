@@ -15,7 +15,11 @@ end
 
 bar = Bar.new(1, 3)
 
-case foo
+baz = { "results" => [{ foo: "bar" }] }
+
+case baz
+in { "results" => foo }
+  p foo
 in {a: "Alice", children: [{name: "Bob", age: age}]}
 in { e: 5, a: [0, _], b: { c: z } } # | { e: 1, b: x, a: y }
   p x
